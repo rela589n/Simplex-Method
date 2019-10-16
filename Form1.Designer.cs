@@ -30,7 +30,7 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.iterativeTable = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
@@ -50,6 +50,7 @@
             this.startX4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.basis = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CBasis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.freeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.x1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.x2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,7 +71,7 @@
             this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iterativeTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.SuspendLayout();
@@ -92,7 +93,7 @@
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView1.Size = new System.Drawing.Size(670, 117);
+            this.dataGridView1.Size = new System.Drawing.Size(670, 131);
             this.dataGridView1.TabIndex = 0;
             // 
             // dataGridView2
@@ -109,16 +110,17 @@
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 25;
             this.dataGridView2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView2.Size = new System.Drawing.Size(133, 117);
+            this.dataGridView2.Size = new System.Drawing.Size(133, 131);
             this.dataGridView2.TabIndex = 1;
             // 
-            // dataGridView3
+            // iterativeTable
             // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.iterativeTable.AllowUserToAddRows = false;
+            this.iterativeTable.AllowUserToDeleteRows = false;
+            this.iterativeTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.iterativeTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.basis,
+            this.CBasis,
             this.freeColumn,
             this.x1,
             this.x2,
@@ -128,16 +130,16 @@
             this.x6,
             this.x7,
             this.teta});
-            this.dataGridView3.Location = new System.Drawing.Point(16, 249);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.RowHeadersVisible = false;
-            this.dataGridView3.RowHeadersWidth = 51;
-            this.dataGridView3.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView3.Size = new System.Drawing.Size(1472, 111);
-            this.dataGridView3.TabIndex = 2;
-            this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView3_CellContentClick);
+            this.iterativeTable.Location = new System.Drawing.Point(16, 249);
+            this.iterativeTable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.iterativeTable.Name = "iterativeTable";
+            this.iterativeTable.ReadOnly = true;
+            this.iterativeTable.RowHeadersVisible = false;
+            this.iterativeTable.RowHeadersWidth = 51;
+            this.iterativeTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.iterativeTable.Size = new System.Drawing.Size(1472, 111);
+            this.iterativeTable.TabIndex = 2;
+            this.iterativeTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView3_CellContentClick);
             // 
             // comboBox1
             // 
@@ -188,14 +190,14 @@
             this.Column12,
             this.dataGridViewTextBoxColumn12,
             this.dataGridViewTextBoxColumn13});
-            this.dataGridView4.Location = new System.Drawing.Point(183, 368);
+            this.dataGridView4.Location = new System.Drawing.Point(285, 368);
             this.dataGridView4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
             this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.RowHeadersWidth = 51;
             this.dataGridView4.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dataGridView4.Size = new System.Drawing.Size(1305, 32);
+            this.dataGridView4.Size = new System.Drawing.Size(1203, 32);
             this.dataGridView4.TabIndex = 15;
             // 
             // textBox5
@@ -328,13 +330,20 @@
             this.basis.ReadOnly = true;
             this.basis.Width = 125;
             // 
+            // CBasis
+            // 
+            this.CBasis.HeaderText = "C баз";
+            this.CBasis.MinimumWidth = 6;
+            this.CBasis.Name = "CBasis";
+            this.CBasis.ReadOnly = true;
+            this.CBasis.Width = 75;
+            // 
             // freeColumn
             // 
             this.freeColumn.HeaderText = "А";
             this.freeColumn.MinimumWidth = 6;
             this.freeColumn.Name = "freeColumn";
             this.freeColumn.ReadOnly = true;
-            this.freeColumn.Width = 125;
             // 
             // x1
             // 
@@ -398,7 +407,6 @@
             this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
             this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            this.dataGridViewTextBoxColumn6.Width = 125;
             // 
             // dataGridViewTextBoxColumn7
             // 
@@ -470,7 +478,7 @@
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.dataGridView3);
+            this.Controls.Add(this.iterativeTable);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
@@ -479,7 +487,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iterativeTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.ResumeLayout(false);
@@ -489,7 +497,7 @@
 
         #endregion
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView iterativeTable;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
@@ -510,6 +518,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn startX3;
         private System.Windows.Forms.DataGridViewTextBoxColumn startX4;
         private System.Windows.Forms.DataGridViewTextBoxColumn basis;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CBasis;
         private System.Windows.Forms.DataGridViewTextBoxColumn freeColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn x1;
         private System.Windows.Forms.DataGridViewTextBoxColumn x2;

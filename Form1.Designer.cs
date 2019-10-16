@@ -36,11 +36,8 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.stock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iterativeTable = new System.Windows.Forms.DataGridView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.dzTable = new System.Windows.Forms.DataGridView();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBoxResult = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -68,6 +65,11 @@
             this.dzX5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dzX6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dzX7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxMax = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iterativeTable)).BeginInit();
@@ -175,39 +177,6 @@
             this.iterativeTable.TabIndex = 2;
             this.iterativeTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView3_CellContentClick);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "<="});
-            this.comboBox1.Location = new System.Drawing.Point(750, 98);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(63, 24);
-            this.comboBox1.TabIndex = 11;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "<="});
-            this.comboBox2.Location = new System.Drawing.Point(750, 132);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(63, 24);
-            this.comboBox2.TabIndex = 12;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "<="});
-            this.comboBox3.Location = new System.Drawing.Point(750, 165);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(4);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(63, 24);
-            this.comboBox3.TabIndex = 13;
-            // 
             // dzTable
             // 
             this.dzTable.AllowUserToAddRows = false;
@@ -233,13 +202,13 @@
             this.dzTable.Size = new System.Drawing.Size(1152, 32);
             this.dzTable.TabIndex = 15;
             // 
-            // textBox5
+            // textBoxResult
             // 
-            this.textBox5.Location = new System.Drawing.Point(209, 438);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(4);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(267, 22);
-            this.textBox5.TabIndex = 16;
+            this.textBoxResult.Location = new System.Drawing.Point(209, 438);
+            this.textBoxResult.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxResult.Name = "textBoxResult";
+            this.textBoxResult.Size = new System.Drawing.Size(191, 22);
+            this.textBoxResult.TabIndex = 16;
             // 
             // label5
             // 
@@ -271,6 +240,7 @@
             this.button3.TabIndex = 20;
             this.button3.Text = "На кінець";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // dataGridView5
             // 
@@ -457,20 +427,70 @@
             this.dzX7.Name = "dzX7";
             this.dzX7.ReadOnly = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(485, 441);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 17);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Макс:";
+            // 
+            // textBoxMax
+            // 
+            this.textBoxMax.Location = new System.Drawing.Point(549, 437);
+            this.textBoxMax.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxMax.Name = "textBoxMax";
+            this.textBoxMax.Size = new System.Drawing.Size(191, 22);
+            this.textBoxMax.TabIndex = 22;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(764, 98);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(24, 17);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "<=";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(764, 132);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 17);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "<=";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(764, 165);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 17);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "<=";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1570, 554);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxMax);
             this.Controls.Add(this.dataGridView5);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBoxResult);
             this.Controls.Add(this.dzTable);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.iterativeTable);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
@@ -491,12 +511,9 @@
         #endregion
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView iterativeTable;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
         public System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridView dzTable;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBoxResult;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
@@ -529,6 +546,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxMax;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }
 

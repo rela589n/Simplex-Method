@@ -44,36 +44,39 @@ namespace Symplex_method
             dataGridView1.RowTemplate.Height = 30;
             iterativeTable.Rows.Add(3);
             dzTable.Rows.Add();
+
+            /*
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
+            */
             dataGridView5.Rows.Add();
             dataGridView5.Rows[0].HeaderCell.Value = "F=";
 
-            dataGridView1.Rows[0].Cells[0].Value = 10;
-            dataGridView1.Rows[1].Cells[0].Value = 6;
-            dataGridView1.Rows[2].Cells[0].Value = 5;
+            dataGridView1.Rows[0].Cells[0].Value = 2;
+            dataGridView1.Rows[1].Cells[0].Value = 0;
+            dataGridView1.Rows[2].Cells[0].Value = 2;
 
-            dataGridView1.Rows[0].Cells[1].Value = 4;
-            dataGridView1.Rows[1].Cells[1].Value = 2;
-            dataGridView1.Rows[2].Cells[1].Value = 12;
+            dataGridView1.Rows[0].Cells[1].Value = 2;
+            dataGridView1.Rows[1].Cells[1].Value = 1;
+            dataGridView1.Rows[2].Cells[1].Value = 1;
 
-            dataGridView1.Rows[0].Cells[2].Value = 3;
-            dataGridView1.Rows[1].Cells[2].Value = 5;
-            dataGridView1.Rows[2].Cells[2].Value = 6;
+            dataGridView1.Rows[0].Cells[2].Value = 4;
+            dataGridView1.Rows[1].Cells[2].Value = 2;
+            dataGridView1.Rows[2].Cells[2].Value = 0;
 
-            dataGridView1.Rows[0].Cells[3].Value = 1;
+            dataGridView1.Rows[0].Cells[3].Value = 5;
             dataGridView1.Rows[1].Cells[3].Value = 2;
-            dataGridView1.Rows[2].Cells[3].Value = 10;
+            dataGridView1.Rows[2].Cells[3].Value = 6;
 
-            dataGridView5.Rows[0].Cells[0].Value = 30;
-            dataGridView5.Rows[0].Cells[1].Value = 80;
-            dataGridView5.Rows[0].Cells[2].Value = 40;
-            dataGridView5.Rows[0].Cells[3].Value = 10;
+            dataGridView5.Rows[0].Cells[0].Value = 2;
+            dataGridView5.Rows[0].Cells[1].Value = 4;
+            dataGridView5.Rows[0].Cells[2].Value = 6;
+            dataGridView5.Rows[0].Cells[3].Value = 1;
 
-            dataGridView2.Rows[0].Cells[0].Value = 60;
-            dataGridView2.Rows[1].Cells[0].Value = 200;
-            dataGridView2.Rows[2].Cells[0].Value = 300;
+            dataGridView2.Rows[0].Cells[0].Value = 28;
+            dataGridView2.Rows[1].Cells[0].Value = 10;
+            dataGridView2.Rows[2].Cells[0].Value = 14;
         }
 
         bool validate()
@@ -224,6 +227,7 @@ namespace Symplex_method
             if (baseCol == -1)
             {
                 this.found = true;
+                showResult();
             }
             else if (!calculateTeta(baseCol))
             {
@@ -282,15 +286,48 @@ namespace Symplex_method
 
         void showResult()
         {
-            
-            //for 
-            //iterativeTable.Columns["basis"]
+            List<String> resultVars = new List<String>();
+
+            for (int i = 0; i < 3; ++i)
+            {
+                resultVars.Add(iterativeTable["basis", i].Value.ToString());
+            }
+
+            StringBuilder ans = new StringBuilder("(");
+
+            for (int i = 1; i <= 4; ++i)
+            {
+                String app;
+                int indx = resultVars.FindIndex(x => x == "x" + i);
+                if (indx != -1)
+                {
+                    app = iterativeTable["freeColumn", indx].Value.ToString();
+                }
+                else
+                {
+                    app = "0";
+                }
+
+                ans.Append(app);
+
+                if (i != 4)
+                {
+                    ans.Append(", ");
+                }
+                else
+                {
+                    ans.Append(")");
+                }
+            }
+            MessageBox.Show(ans.ToString());
+            textBoxResult.Text = ans.ToString();
+            textBoxMax.Text = dzTable[0, 0].Value.ToString();
         }
         private void button2_Click(object sender, EventArgs e)
         {
             if (it == 0)
             {
-                if (validate() || true) //////////////////////////////////////
+                if (validate()) //////////////////////////////////////
                 {
                     initBaseCoefs();
                     initTable();
@@ -346,6 +383,7 @@ namespace Symplex_method
                 if (baseCol == -1)
                 {
                     this.found = true;
+                    showResult();
                 }
                 else if (!calculateTeta(baseCol))
                 {
@@ -368,6 +406,15 @@ namespace Symplex_method
         private void DataGridView5_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            do
+            {
+                button2_Click(sender, e);
+            }
+            while (this.success && !this.found);
         }
     }
 }

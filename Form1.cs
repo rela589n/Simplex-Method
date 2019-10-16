@@ -13,9 +13,27 @@ namespace Symplex_method
     public partial class Form1 : Form
     {
         int it = 0;
+        int baseCol = -1;
+        int baseRow = -1;
+        Dictionary<String, double> baseCoefs = new Dictionary<string, double>();
+
+        bool found = false;
+        bool success = true;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        void initBaseCoefs()
+        {
+            for (int i = 1; i <= 4; ++i)
+            {
+                this.baseCoefs.Add("x" + i, double.Parse(dataGridView5["startX" + i, 0].Value.ToString()));
+            }
+            for (int i = 5; i <= 7; ++i)
+            {
+                this.baseCoefs.Add("x" + i, 0.0);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -25,12 +43,37 @@ namespace Symplex_method
             dataGridView2.Rows.Add(3);
             dataGridView1.RowTemplate.Height = 30;
             iterativeTable.Rows.Add(3);
-            dataGridView4.Rows.Add();
+            dzTable.Rows.Add();
             comboBox1.SelectedIndex = 0;
             comboBox2.SelectedIndex = 0;
             comboBox3.SelectedIndex = 0;
             dataGridView5.Rows.Add();
             dataGridView5.Rows[0].HeaderCell.Value = "F=";
+
+            dataGridView1.Rows[0].Cells[0].Value = 10;
+            dataGridView1.Rows[1].Cells[0].Value = 6;
+            dataGridView1.Rows[2].Cells[0].Value = 5;
+
+            dataGridView1.Rows[0].Cells[1].Value = 4;
+            dataGridView1.Rows[1].Cells[1].Value = 2;
+            dataGridView1.Rows[2].Cells[1].Value = 12;
+
+            dataGridView1.Rows[0].Cells[2].Value = 3;
+            dataGridView1.Rows[1].Cells[2].Value = 5;
+            dataGridView1.Rows[2].Cells[2].Value = 6;
+
+            dataGridView1.Rows[0].Cells[3].Value = 1;
+            dataGridView1.Rows[1].Cells[3].Value = 2;
+            dataGridView1.Rows[2].Cells[3].Value = 10;
+
+            dataGridView5.Rows[0].Cells[0].Value = 30;
+            dataGridView5.Rows[0].Cells[1].Value = 80;
+            dataGridView5.Rows[0].Cells[2].Value = 40;
+            dataGridView5.Rows[0].Cells[3].Value = 10;
+
+            dataGridView2.Rows[0].Cells[0].Value = 60;
+            dataGridView2.Rows[1].Cells[0].Value = 200;
+            dataGridView2.Rows[2].Cells[0].Value = 300;
         }
 
         bool validate()
@@ -68,11 +111,74 @@ namespace Symplex_method
             return true;
         }
 
+        int calculateBaseCol()
+        {
+            int baseCol = -1;
+
+            double minVal = double.PositiveInfinity;
+            for (int j = 1; j <= 7; ++j)
+            {
+                double val = double.Parse(dzTable["dzX" + j.ToString(), 0].Value.ToString());
+
+                if (minVal > val)
+                {
+                    baseCol = j;
+                    minVal = val;
+                }
+            }
+
+            return (minVal < 0) ? baseCol : -1;
+        }
+
+        int calculateBaseRow()
+        {
+            int row = -1;
+            double minVal = double.PositiveInfinity;
+
+            for (int i = 0; i < 3; ++i)
+            {
+                double v;
+                if (double.TryParse(iterativeTable["teta", i].Value.ToString(), out v))
+                {
+                    if (minVal > v)
+                    {
+                        minVal = v;
+                        row = i;
+                    }
+                }
+            }
+
+            return row;
+        }
+
+        bool calculateTeta(int baseRow)
+        {
+            bool set = false;
+            for (int i = 0; i < 3; ++i)
+            {
+                double a = double.Parse(iterativeTable["freeColumn", i].Value.ToString());
+                double x = double.Parse(iterativeTable["x" + baseRow, i].Value.ToString());
+
+                if (x == 0 || a / x < 0)
+                {
+                    iterativeTable["teta", i].Value = float.NaN;
+                }
+                else
+                {
+                    set = true;
+                    iterativeTable["teta", i].Value = Math.Round(a / x, 8);
+                }
+            }
+
+            return set;
+        }
+
+
         public void initTable()
         {
             for (int i = 0; i < dataGridView5.ColumnCount; i++)
             {
-                dataGridView4.Rows[0].Cells[i + 1].Value = -Convert.ToInt32(dataGridView5.Rows[0].Cells[i].Value);
+                dzTable.Rows[0].Cells[i + 1].Value = -Convert.ToInt32(dataGridView5.Rows[0].Cells[i].Value);
             }
 
             iterativeTable["x5", 0].Value = 1;
@@ -100,20 +206,93 @@ namespace Symplex_method
             iterativeTable["freeColumn", 1].Value = dataGridView2[0, 1].Value;
             iterativeTable["freeColumn", 2].Value = dataGridView2[0, 2].Value;
 
-            for (int i = 0; i < 3; i++) { 
+            for (int i = 0; i < 3; i++)
+            {
                 for (int j = 1; j <= 4; j++)
                 {
                     iterativeTable["x" + j.ToString(), i].Value = dataGridView1["matrixX" + j.ToString(), i].Value;
                 }
             }
+
+            dzTable[0, 0].Value = 0;
+            for (int j = 5; j <= 7; ++j)
+            {
+                dzTable["dzX" + j.ToString(), 0].Value = 0;
+            }
+
+            this.baseCol = calculateBaseCol();
+            if (baseCol == -1)
+            {
+                this.found = true;
+            }
+            else if (!calculateTeta(baseCol))
+            {
+                MessageBox.Show("Задача не має розв'язку!");
+            }
+            else
+            {
+                this.baseRow = calculateBaseRow();
+            }
         }
 
+        double calulateRectangle(int row, int col)
+        {
+            if (row == baseRow)
+            {
+                if (col == baseCol)
+                {
+                    return 1;
+                }
+
+                return double.Parse(iterativeTable[col + 2, row].Value.ToString()) /
+                    double.Parse(iterativeTable[baseCol + 2, baseRow].Value.ToString());
+
+            }
+            if (baseCol == col)
+            {
+                return 0;
+            }
+
+            double baseEl = double.Parse(iterativeTable[baseCol + 2, baseRow].Value.ToString());
+            double first = double.Parse(iterativeTable[col + 2, baseRow].Value.ToString());
+            double currentEl;
+            double second;
+
+            if (row < 3)
+            {
+                currentEl = double.Parse(iterativeTable[col + 2, row].Value.ToString());
+                second = double.Parse(iterativeTable[baseCol + 2, row].Value.ToString());
+            }
+            else
+            {
+                row = 0;
+                currentEl = double.Parse(dzTable[col, row].Value.ToString());
+                second = double.Parse(dzTable[baseCol, row].Value.ToString());
+            }
+
+            return (currentEl * baseEl - first * second) / baseEl;
+        }
+
+        void changeBaseVar()
+        {
+            String columnName = iterativeTable.Columns[baseCol + 2].Name;
+            iterativeTable[0, baseRow].Value = columnName;
+            iterativeTable[1, baseRow].Value = baseCoefs[columnName];
+        }
+
+        void showResult()
+        {
+            
+            //for 
+            //iterativeTable.Columns["basis"]
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             if (it == 0)
             {
-                if (validate())
+                if (validate() || true) //////////////////////////////////////
                 {
+                    initBaseCoefs();
                     initTable();
                 }
                 else
@@ -121,10 +300,62 @@ namespace Symplex_method
                     MessageBox.Show("Не всі поля заповнені");
                     return;
                 }
-                
+
             }
+            else
+            {
+                if (this.found)
+                {
+                    MessageBox.Show("Відповідь вже знайдена!");
+                    return;
+                }
+                else if (!this.success)
+                {
+                    MessageBox.Show("Задача не має відповіді!");
+                    return;
+                }
+                changeBaseVar();
 
+                Dictionary<String, double>[] dict = new Dictionary<String, double>[4];
 
+                for (int i = 0; i < 4; ++i)
+                {
+                    dict[i] = new Dictionary<string, double>();
+
+                    dict[i].Add("freeColumn", calulateRectangle(i, 0));
+                    for (int j = 1; j <= 7; ++j)
+                    {
+                        dict[i].Add("x" + j, calulateRectangle(i, j));
+                    }
+                }
+
+                for (int i = 0; i < 3; ++i)
+                {
+                    foreach (var el in dict[i])
+                    {
+                        iterativeTable[el.Key, i].Value = Math.Round(el.Value, 8);
+                    }
+                }
+
+                foreach (var el in dict[3])
+                {
+                    dzTable["dz" + el.Key.ToUpper(), 0].Value = Math.Round(el.Value, 8);
+                }
+
+                this.baseCol = calculateBaseCol();
+                if (baseCol == -1)
+                {
+                    this.found = true;
+                }
+                else if (!calculateTeta(baseCol))
+                {
+                    MessageBox.Show("Задача не має розв'язку!");
+                }
+                else
+                {
+                    this.baseRow = calculateBaseRow();
+                }
+            }
 
             ++this.it;
         }

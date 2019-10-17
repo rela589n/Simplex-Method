@@ -46,6 +46,12 @@
             this.startX2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startX3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startX4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxMax = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.basis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CBasis = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.freeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,11 +71,6 @@
             this.dzX5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dzX6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dzX7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxMax = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iterativeTable)).BeginInit();
@@ -175,7 +176,6 @@
             this.iterativeTable.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.iterativeTable.Size = new System.Drawing.Size(1472, 111);
             this.iterativeTable.TabIndex = 2;
-            this.iterativeTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView3_CellContentClick);
             // 
             // dzTable
             // 
@@ -260,7 +260,6 @@
             this.dataGridView5.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridView5.Size = new System.Drawing.Size(736, 59);
             this.dataGridView5.TabIndex = 21;
-            this.dataGridView5.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView5_CellContentClick);
             // 
             // startX1
             // 
@@ -290,6 +289,65 @@
             this.startX4.Name = "startX4";
             this.startX4.Width = 125;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(485, 441);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(45, 17);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Макс:";
+            // 
+            // textBoxMax
+            // 
+            this.textBoxMax.Location = new System.Drawing.Point(549, 437);
+            this.textBoxMax.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxMax.Name = "textBoxMax";
+            this.textBoxMax.Size = new System.Drawing.Size(191, 22);
+            this.textBoxMax.TabIndex = 22;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(764, 98);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(24, 17);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "<=";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(764, 132);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 17);
+            this.label3.TabIndex = 25;
+            this.label3.Text = "<=";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(764, 165);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 17);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "<=";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(998, 81);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "На початок";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // basis
             // 
             this.basis.HeaderText = "Базис";
@@ -312,7 +370,6 @@
             this.freeColumn.MinimumWidth = 6;
             this.freeColumn.Name = "freeColumn";
             this.freeColumn.ReadOnly = true;
-            this.freeColumn.Width = 125;
             // 
             // x1
             // 
@@ -376,7 +433,6 @@
             this.dzFREECOLUMN.MinimumWidth = 6;
             this.dzFREECOLUMN.Name = "dzFREECOLUMN";
             this.dzFREECOLUMN.ReadOnly = true;
-            this.dzFREECOLUMN.Width = 125;
             // 
             // dzX1
             // 
@@ -427,59 +483,13 @@
             this.dzX7.Name = "dzX7";
             this.dzX7.ReadOnly = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(485, 441);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 17);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Макс:";
-            // 
-            // textBoxMax
-            // 
-            this.textBoxMax.Location = new System.Drawing.Point(549, 437);
-            this.textBoxMax.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxMax.Name = "textBoxMax";
-            this.textBoxMax.Size = new System.Drawing.Size(191, 22);
-            this.textBoxMax.TabIndex = 22;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(764, 98);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 17);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "<=";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(764, 132);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(24, 17);
-            this.label3.TabIndex = 25;
-            this.label3.Text = "<=";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(764, 165);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 17);
-            this.label4.TabIndex = 26;
-            this.label4.Text = "<=";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1570, 554);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -496,7 +506,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Симплекс-метод";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
@@ -527,6 +537,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn startX2;
         private System.Windows.Forms.DataGridViewTextBoxColumn startX3;
         private System.Windows.Forms.DataGridViewTextBoxColumn startX4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxMax;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridViewTextBoxColumn basis;
         private System.Windows.Forms.DataGridViewTextBoxColumn CBasis;
         private System.Windows.Forms.DataGridViewTextBoxColumn freeColumn;
@@ -546,11 +562,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dzX7;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBoxMax;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
     }
 }
 

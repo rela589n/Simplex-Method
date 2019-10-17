@@ -45,38 +45,39 @@ namespace Symplex_method
             iterativeTable.Rows.Add(3);
             dzTable.Rows.Add();
 
-            /*
-            comboBox1.SelectedIndex = 0;
-            comboBox2.SelectedIndex = 0;
-            comboBox3.SelectedIndex = 0;
-            */
             dataGridView5.Rows.Add();
             dataGridView5.Rows[0].HeaderCell.Value = "F=";
 
-            dataGridView1.Rows[0].Cells[0].Value = 2;
-            dataGridView1.Rows[1].Cells[0].Value = 0;
-            dataGridView1.Rows[2].Cells[0].Value = 2;
+            dataGridView1.Rows[0].Cells[0].Value = 5;
+            dataGridView1.Rows[1].Cells[0].Value = 15;
+            dataGridView1.Rows[2].Cells[0].Value = 10;
 
-            dataGridView1.Rows[0].Cells[1].Value = 2;
-            dataGridView1.Rows[1].Cells[1].Value = 1;
-            dataGridView1.Rows[2].Cells[1].Value = 1;
+            dataGridView1.Rows[0].Cells[1].Value = 1;
+            dataGridView1.Rows[1].Cells[1].Value = 30;
+            dataGridView1.Rows[2].Cells[1].Value = 40;
 
-            dataGridView1.Rows[0].Cells[2].Value = 4;
+            dataGridView1.Rows[0].Cells[2].Value = 10;
             dataGridView1.Rows[1].Cells[2].Value = 2;
-            dataGridView1.Rows[2].Cells[2].Value = 0;
+            dataGridView1.Rows[2].Cells[2].Value = 2;
 
-            dataGridView1.Rows[0].Cells[3].Value = 5;
+            dataGridView1.Rows[0].Cells[3].Value = 1;
             dataGridView1.Rows[1].Cells[3].Value = 2;
-            dataGridView1.Rows[2].Cells[3].Value = 6;
+            dataGridView1.Rows[2].Cells[3].Value = 20;
 
-            dataGridView5.Rows[0].Cells[0].Value = 2;
-            dataGridView5.Rows[0].Cells[1].Value = 4;
-            dataGridView5.Rows[0].Cells[2].Value = 6;
-            dataGridView5.Rows[0].Cells[3].Value = 1;
+            dataGridView5.Rows[0].Cells[0].Value = 50;
+            dataGridView5.Rows[0].Cells[1].Value = 120;
+            dataGridView5.Rows[0].Cells[2].Value = 70;
+            dataGridView5.Rows[0].Cells[3].Value = 100;
 
-            dataGridView2.Rows[0].Cells[0].Value = 28;
-            dataGridView2.Rows[1].Cells[0].Value = 10;
-            dataGridView2.Rows[2].Cells[0].Value = 14;
+            dataGridView2.Rows[0].Cells[0].Value = 60;
+            dataGridView2.Rows[1].Cells[0].Value = 200;
+            dataGridView2.Rows[2].Cells[0].Value = 300;
+
+            foreach (DataGridViewColumn column in iterativeTable.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
         }
 
         bool validate()
@@ -169,7 +170,7 @@ namespace Symplex_method
                 else
                 {
                     set = true;
-                    iterativeTable["teta", i].Value = Math.Round(a / x, 8);
+                    iterativeTable["teta", i].Value = Math.Round(a / x, 3);
                 }
             }
 
@@ -319,15 +320,15 @@ namespace Symplex_method
                     ans.Append(")");
                 }
             }
-            MessageBox.Show(ans.ToString());
             textBoxResult.Text = ans.ToString();
             textBoxMax.Text = dzTable[0, 0].Value.ToString();
+            MessageBox.Show("Знайдено відповідь!");
         }
         private void button2_Click(object sender, EventArgs e)
         {
             if (it == 0)
             {
-                if (validate()) //////////////////////////////////////
+                if (validate()) 
                 {
                     initBaseCoefs();
                     initTable();
@@ -337,7 +338,6 @@ namespace Symplex_method
                     MessageBox.Show("Не всі поля заповнені");
                     return;
                 }
-
             }
             else
             {
@@ -351,6 +351,7 @@ namespace Symplex_method
                     MessageBox.Show("Задача не має відповіді!");
                     return;
                 }
+
                 changeBaseVar();
 
                 Dictionary<String, double>[] dict = new Dictionary<String, double>[4];
@@ -370,13 +371,13 @@ namespace Symplex_method
                 {
                     foreach (var el in dict[i])
                     {
-                        iterativeTable[el.Key, i].Value = Math.Round(el.Value, 8);
+                        iterativeTable[el.Key, i].Value = Math.Round(el.Value, 3);
                     }
                 }
 
                 foreach (var el in dict[3])
                 {
-                    dzTable["dz" + el.Key.ToUpper(), 0].Value = Math.Round(el.Value, 8);
+                    dzTable["dz" + el.Key.ToUpper(), 0].Value = Math.Round(el.Value, 3);
                 }
 
                 this.baseCol = calculateBaseCol();
@@ -398,16 +399,6 @@ namespace Symplex_method
             ++this.it;
         }
 
-        private void DataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void DataGridView5_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void Button3_Click(object sender, EventArgs e)
         {
             do
@@ -415,6 +406,36 @@ namespace Symplex_method
                 button2_Click(sender, e);
             }
             while (this.success && !this.found);
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            this.it = 0;
+            this.found = false;
+            this.success = true;
+            this.baseCol = -1;
+            this.baseRow = -1;
+
+            clearIterativeTables();
+            baseCoefs.Clear();
+
+            iterativeTable.Refresh();
+            dzTable.Refresh();
+        }
+
+        void clearIterativeTables()
+        {
+            for (int i = 0; i < iterativeTable.Rows.Count; ++i)
+            {
+                for (int j = 0; j < iterativeTable.Columns.Count; ++j)
+                {
+                    iterativeTable[j, i].Value = null;
+                }
+            }
+            for (int j = 0; j < dzTable.Columns.Count; ++j)
+            {
+                dzTable[j, 0].Value = null;
+            }
         }
     }
 }
